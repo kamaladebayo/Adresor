@@ -1,5 +1,11 @@
-.App {
-  text-align: center;
+.app > nav{
+  padding: 1.5em 2em;
+  /* border: 1px solid red; */
+}
+.app > nav > header{
+  font-weight: 700;
+  font-size: 2rem;
+  font-family: 'Questrial', sans-serif;
 }
 
 .App-logo {
@@ -14,7 +20,9 @@
 }
 
 .App-header {
-  min-height: 100vh;
+  font-family: 'Questrial', sans-serif;
+  text-align: center;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
