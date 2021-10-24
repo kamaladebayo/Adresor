@@ -1,17 +1,37 @@
 import React from 'react';
-import CONSTRUCTION from './img/924.png';
 import './App.css';
+import About from './About';
+import HomePage from './HomePage';
+import Admin from './Admin';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
   return (
     <div className="app">
-      <nav>
-        <header>Adresor</header>
-      </nav>
-      <header className="App-header">
-        <img src={CONSTRUCTION} alt="Page under construction" className="App-logo"/>
-        <h1>Page under construction</h1>
-      </header>
+      {/* Homepage */}
+      {/* <HomePage /> */}
+      {/* About */}
+      {/* <About /> */}
+      {/* Archive */}
+      {/* Admin */}
+      {/* <Admin /> */}
+
+      <Router>
+        <Switch>
+            <Route exact path="/">
+              <HomePage />
+            </Route>
+            <Route path="/about">
+              <About />
+            </Route>
+            <Route path="/admin">
+              <Admin />
+            </Route>
+            {/* <Route path="/archive">
+              <Archive
+            </Route> */}
+        </Switch>
+      </Router>
     </div>
   );
 }

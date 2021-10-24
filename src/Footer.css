@@ -1,0 +1,8 @@
+.footer{
+    background: #333333;
+    color: #FFFFFF;
+    padding: 5em;
+    text-align: center;
+    position:-ms-page;
+    bottom: 0;
+}

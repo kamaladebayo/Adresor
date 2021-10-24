@@ -1,0 +1,38 @@
+.home main{
+    padding: 2em;
+}
+.home__map{
+    display: flex;
+    align-items: center;
+    /* border: 1px solid red; */
+    justify-content: center;
+    gap: 2em;
+}
+.home__mapPreview{
+    width: 10em !important;
+    height: 10em !important;
+}
+    .home{
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+        /* justify-content: space-between; */
+    }
+    .home > .footer{
+        margin-top: auto;
+    }
+@media(max-width: 525px){
+    .home__map{
+        flex-direction: column;
+    }
+}
+.nearbyPlaces{
+     width: fit-content;
+     margin: 0 auto;
+}
+.nearbyPlaces > div{
+    display: flex;
+    justify-content: center;
+    gap: 1.5em;
+    margin: 3em 0;
+}

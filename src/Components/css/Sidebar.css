@@ -1,0 +1,157 @@
+.sidebar{
+    flex: .3;
+    /* border: 1px solid green; */
+    overflow-x: auto;
+    box-sizing: border-box;
+    padding: 2em 1em;
+    padding-bottom: 1em;
+    background: #f9fafe;
+}
+.sidebar *{
+    margin: 0;
+}
+.sidebar__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1em;
+}
+.sidebar__header > a{
+    color: #808080;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 700;
+}
+.sidebar__header ion-icon{
+    font-size: 1.5rem;
+}
+.payment{
+    padding: 0 1em;
+}
+.sidebar__paymentHeader{
+    display: flex;
+    align-items: center;
+    margin: 1em 0;
+    justify-content: space-between;
+}
+.sidebar__paymentHeader > h2{
+    font-weight: 800;
+    font-size: 1.8rem;
+}
+.sidebar__paymentHeader button{
+     background: transparent;
+     border: 1px solid transparent;
+     font-weight: 700;
+     color: #000;
+     font-size: 1rem;
+}
+.sidebar__paymentRow{
+    background: #FFF;
+    border: 1px solid #EFEFEF;
+    margin-bottom: 1em;
+    border-radius: .5em;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.paymentRow__header{
+    display: flex;
+    align-items: center;
+}
+.paymentRow__header ion-icon{
+    font-size: 1.3rem;
+    margin-right: .5em;
+}
+.paymentRow__headerAmount{
+    margin-left: auto;
+}
+.paymentRow__footer{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1em;
+    font-weight: 600;
+    font-size: .9rem;
+}
+.paymentRow__footer ion-icon{
+    font-size: 1.4rem;
+}
+.sidebar__newPayment{
+    background: #d9d7ec;
+    border-radius: .5em;
+    display: flex;
+    padding: .4em;
+    justify-content: center;
+}
+.sidebar__newPayment > ion-icon{
+    font-size: 1.3rem;
+    background: #FFF;
+    color: #0000CD;
+    padding: .3em;
+    border-radius: .3em;
+    margin-right: auto;
+}
+.sidebar__newPayment > p{
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    color: #7169a2;
+    font-weight: 800;
+    gap: .5em;
+    font-size: .9rem;
+}
+.sidebar__newPayment > p ion-icon{
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+/* Wallets */
+.sidebar__wallets{
+    padding: 0 1em;
+    margin-top: 1em;
+}
+.sidebar__wallets > h2{
+    font-weight: 800;
+    font-size: 1.8rem;
+}
+.wallet{
+    /* border: 1px solid red; */
+}
+
+
+
+.sidebar__walletGroup{
+    display: flex;
+    flex-direction: column;
+    gap: .3em;
+
+}
+.wallet{
+    margin-top: .5em;
+    /* flex: 1; */
+    /* display: flex;
+    align-items: center;
+    justify-content: space-between; */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    gap: 0 1em;
+    /* justify-items: start; */
+    /* justify-content: start; */
+}
+.wallet > ion-icon{
+    color:mediumblue;
+    background: rgba(70, 130, 180, .2);
+    padding: .3em;
+    border-radius: .3em;
+    font-size: 1.7rem;
+}
+.walletColumn p:first-child b{
+    font-weight: 800;
+    font-weight: .9rem;
+}
+.walletColumn p:last-child{
+    font-weight: 600;
+    font-size: .8rem;
+    color: #A0A0A0;
+}
