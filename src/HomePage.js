@@ -7,7 +7,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import axios from 'axios'
@@ -47,9 +47,25 @@ function SimpleDialog(props) {
   =========================================
    */
   const [coordinates, setCoordinates] = useState('')
+  const [latitude, setLatitude] = useState('')
+  const [longitude, setLongitude] = useState('')
+  const [address, setAddress] = useState('')
+  const [postalCode, setPostalCode] = useState('')
+  const [IP, setIP] = useState('')
+
+  axios.get('https://api.ipify.org/?format=json')
+  .then(response => {
+    setIP(response.data.ip)
+}).catch(error => {
+    console.log(error);
+});
+
+
   const successCallback = (position) => {
       console.log(position)
       console.log(position.code)
+      setLatitude(`${position.coords.latitude}`)
+      setLongitude(`${position.coords.longitude}`)
       setCoordinates(`${position.coords.latitude},${position.coords.longitude}`)
   }
   const errorCallback = (error) => {
@@ -59,24 +75,45 @@ function SimpleDialog(props) {
 
   
 
+    useEffect(() => {
+        // const params = {
+        // access_key: 'ab88f8ad9ca839540f9310013a98e47f',
+        // query: coordinates,
+        // output: 'json',
+        // limit: 1
+        // }
+    
+        axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=400e716d00d04d4987c5fda5b9a34ce3`)
+        .then(response => {
+            let locationData = response.data;
+            console.log(locationData.features[0].properties);
+            setPostalCode(locationData.features[0].properties.postcode)
+            setAddress(`${locationData.features[0].properties.street}, ${locationData.features[0].properties.state}`)
+        }).catch(error => {
+            console.log(error);
+        });
 
-  if(coordinates){
-      const params = {
-      access_key: 'ab88f8ad9ca839540f9310013a98e47f',
-      query: coordinates,
-      output: 'json',
-      limit: 1
-      }
+        return () => {
+            console.log("cleanup")
+        }
+    }, [longitude, latitude])
+//   if(coordinates){
+//       const params = {
+//       access_key: 'ab88f8ad9ca839540f9310013a98e47f',
+//       query: coordinates,
+//       output: 'json',
+//       limit: 1
+//       }
   
-      axios.get('https://api.positionstack.com/v1/reverse', {params})
-      .then(response => {
-          console.log(response.data);
-      }).catch(error => {
-          console.log(error);
-      });
-  }else{
-      console.log("Kolarovvvvv");
-  }
+//       axios.get('https://api.positionstack.com/v1/reverse', {params})
+//       .then(response => {
+//           console.log(response.data);
+//       }).catch(error => {
+//           console.log(error);
+//       });
+//   }else{
+//       console.log("Kolarovvvvv");
+//   }
 
 
 
@@ -96,9 +133,9 @@ function SimpleDialog(props) {
                     </Avatar>
                     <div className="map__location">
                         <h1>Here's your location:</h1>
-                        <p>Address</p>
-                        <p>Postal code</p>
-                        <p>IP address code</p>
+                        <p>Address: {address}</p>
+                        <p>Postal code: {postalCode}</p>
+                        <p>IP address code: {IP}</p>
                         <p>Coordinates: {coordinates}</p>
                     </div>
                 </div>
