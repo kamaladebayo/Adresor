@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
+import axios from 'axios'
 
 const HomePage = () => {
 
@@ -39,6 +40,51 @@ function SimpleDialog(props) {
     setSelectedValue(value);
   };
 
+
+
+  /* ================================
+  ===== Adresor code =================
+  =========================================
+   */
+  const [coordinates, setCoordinates] = useState('')
+  const successCallback = (position) => {
+      console.log(position)
+      console.log(position.code)
+      setCoordinates(`${position.coords.latitude},${position.coords.longitude}`)
+  }
+  const errorCallback = (error) => {
+      console.error(error)
+  }
+  navigator.geolocation.getCurrentPosition(successCallback, errorCallback)
+
+  
+
+
+  if(coordinates){
+      const params = {
+      access_key: 'ab88f8ad9ca839540f9310013a98e47f',
+      query: coordinates,
+      output: 'json',
+      limit: 1
+      }
+  
+      axios.get('https://api.positionstack.com/v1/reverse', {params})
+      .then(response => {
+          console.log(response.data);
+      }).catch(error => {
+          console.log(error);
+      });
+  }else{
+      console.log("Kolarovvvvv");
+  }
+
+
+
+  /* ====================================================
+  ====================================================
+  =============================================================
+   */
+
     return ( 
         <div className="home">
             <Navbar />
@@ -53,7 +99,7 @@ function SimpleDialog(props) {
                         <p>Address</p>
                         <p>Postal code</p>
                         <p>IP address code</p>
-                        <p>GPS coordiantes</p>
+                        <p>Coordinates: {coordinates}</p>
                     </div>
                 </div>
                 <br />
