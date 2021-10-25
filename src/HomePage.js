@@ -50,7 +50,11 @@ function SimpleDialog(props) {
   const [latitude, setLatitude] = useState('')
   const [longitude, setLongitude] = useState('')
   const [address, setAddress] = useState('')
+  const [address2, setAddress2] = useState('')
   const [postalCode, setPostalCode] = useState('')
+  const [city, setCity] = useState('')
+  const [state, setState] = useState('')
+  const [country, setCountry] = useState('')
   const [IP, setIP] = useState('')
 
   axios.get('https://api.ipify.org/?format=json')
@@ -62,11 +66,12 @@ function SimpleDialog(props) {
 
 
   const successCallback = (position) => {
-      console.log(position)
-      console.log(position.code)
+    //   console.log(position)
+    //   console.log(position.code)
       setLatitude(`${position.coords.latitude}`)
       setLongitude(`${position.coords.longitude}`)
       setCoordinates(`${position.coords.latitude},${position.coords.longitude}`)
+      
   }
   const errorCallback = (error) => {
       console.error(error)
@@ -88,7 +93,11 @@ function SimpleDialog(props) {
             let locationData = response.data;
             console.log(locationData.features[0].properties);
             setPostalCode(locationData.features[0].properties.postcode)
-            setAddress(`${locationData.features[0].properties.street}, ${locationData.features[0].properties.state}`)
+            setAddress(`${locationData.features[0].properties.street}, ${locationData.features[0].properties.city}`)
+            setAddress2(`${locationData.features[0].properties.formatted}`)
+            setCity(`${locationData.features[0].properties.city}`)
+            setState(`${locationData.features[0].properties.state}`)
+            setCountry(`${locationData.features[0].properties.country}`)
         }).catch(error => {
             console.log(error);
         });
@@ -133,7 +142,12 @@ function SimpleDialog(props) {
                     </Avatar>
                     <div className="map__location">
                         <h1>Here's your location:</h1>
+                        <p>{address2}</p>
+                        <br />
                         <p>Address: {address}</p>
+                        <p>City: {city}</p>
+                        <p>State: {state}</p>
+                        <p>Country: {country}</p>
                         <p>Postal code: {postalCode}</p>
                         <p>IP address code: {IP}</p>
                         <p>Coordinates: {coordinates}</p>
