@@ -36,3 +36,10 @@
     gap: 1.5em;
     margin: 3em 0;
 }
+div#map{
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    /* position: static; */
+    background: #DDD;
+}

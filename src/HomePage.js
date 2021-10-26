@@ -1,8 +1,8 @@
 import './HomePage.css'
 import Navbar from './Navbar';
 import Footer from './Footer';
-import { Avatar, Card } from '@mui/material';
-import { Map } from '@mui/icons-material';
+// import { Avatar, Card } from '@mui/material';
+// import { Map } from '@mui/icons-material';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
@@ -11,6 +11,8 @@ import { useEffect, useState } from 'react';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import axios from 'axios'
+import mapboxgl from 'mapbox-gl'
+import { Card } from '@mui/material';
 
 const HomePage = () => {
 
@@ -81,21 +83,7 @@ function SimpleDialog(props) {
   
 
     useEffect(() => {
-        // const params = {
-        // access_key: 'ab88f8ad9ca839540f9310013a98e47f',
-        // query: coordinates,
-        // output: 'json',
-        // limit: 1
-        // }
-        // Mapbox address
-        axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA`)
-        .then(response => {
-            setAddress2(response.data.features[0].place_name);
-            // setAddress2(`${locationData.features[0].properties.formatted}`)
-        }).catch(error => {
-            console.log(error);
-        });
-
+        
 
         //
         axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=400e716d00d04d4987c5fda5b9a34ce3`)
@@ -116,23 +104,38 @@ function SimpleDialog(props) {
             console.log("cleanup")
         }
     }, [longitude, latitude])
-//   if(coordinates){
-//       const params = {
-//       access_key: 'ab88f8ad9ca839540f9310013a98e47f',
-//       query: coordinates,
-//       output: 'json',
-//       limit: 1
-//       }
-  
-//       axios.get('https://api.positionstack.com/v1/reverse', {params})
-//       .then(response => {
-//           console.log(response.data);
-//       }).catch(error => {
-//           console.log(error);
-//       });
-//   }else{
-//       console.log("Kolarovvvvv");
-//   }
+
+    useEffect(() => {
+       axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA`)
+        .then(response => {
+            setAddress2(response.data.features[0].place_name);
+            // setAddress2(`${locationData.features[0].properties.formatted}`)
+        }).catch(error => {
+            console.log(error);
+        });
+
+
+        // axios.get('https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js')
+        // .then(res => {
+        //     console.log(res);
+        // }).catch(err => {
+        //     console.log(err);
+        // })
+
+        mapboxgl.accessToken = 'pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA';
+        const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/mapbox/streets-v11', // style URL
+        center: [longitude, latitude], // starting position [lng, lat]
+        zoom: 9 // starting zoom
+        });
+
+        console.log(map);
+
+        return () => {
+            console.log("cleanup")
+        }
+    }, [longitude, latitude])
 
 
 
@@ -147,9 +150,7 @@ function SimpleDialog(props) {
             <main>
                 <div className="home__map">
                     {/* Avatar */}
-                    <Avatar className="home__mapPreview">
-                        <Map fontSize="large"/>
-                    </Avatar>
+                    <div id="map"></div>
                     <div className="map__location">
                         <h1>Here's your location:</h1>
                         <p>{address2}</p>
