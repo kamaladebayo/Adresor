@@ -72,44 +72,50 @@ function SimpleDialog(props) {
   }
   navigator.geolocation.getCurrentPosition(successCallback, errorCallback)
 
-  useEffect(() => {
-    if(coordinates){
-        // Embed Map
-        axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA`)
-        .then(response => {
-            setAddress2(response.data.features[0].place_name);
-            // setAddress2(`${locationData.features[0].properties.formatted}`)
-        }).catch(error => {
-            console.log(error);
-        });
+
+        useEffect(() => {
+            axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA`)
+            .then(response => {
+                setAddress2(response.data.features[0].place_name);
+                // setAddress2(`${locationData.features[0].properties.formatted}`)
+            }).catch(error => {
+                console.log(error);
+            });
 
 
-        mapboxgl.accessToken = 'pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA';
-        const map = new mapboxgl.Map({
-        container: 'map', // container ID
-        style: 'mapbox://styles/mapbox/streets-v11', // style URL
-        center: [longitude, latitude], // starting position [lng, lat]
-        zoom: 9 // starting zoom
-        });
+            mapboxgl.accessToken = 'pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA';
+            const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/streets-v11', // style URL
+            center: [longitude, latitude], // starting position [lng, lat]
+            zoom: 9 // starting zoom
+            });
 
-        console.log(map);
+            console.log(map);
+        }, [longitude, latitude])
         // ===========================================
         // =========================
 
+
         // GET location
-        axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=400e716d00d04d4987c5fda5b9a34ce3`)
-        .then(response => {
-            let locationData = response.data;
-            // console.log(locationData.features[0].properties);
-            setPostalCode(locationData.features[0].properties.postcode)
-            setAddress(`${locationData.features[0].properties.street}, ${locationData.features[0].properties.city || locationData.features[0].properties.county}`)
-            // setAddress2(`${locationData.features[0].properties.formatted}`)
-            setCity(`${locationData.features[0].properties.city || locationData.features[0].properties.county}`)
-            setState(`${locationData.features[0].properties.state}`)
-            setCountry(`${locationData.features[0].properties.country}`)
-        }).catch(error => {
-            console.log(error);
-        });
+
+        useEffect(() => {
+            axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=400e716d00d04d4987c5fda5b9a34ce3`)
+            .then(response => {
+                let locationData = response.data;
+                console.log(locationData.features[0].properties);
+                setPostalCode(locationData.features[0].properties.postcode)
+                setAddress(`${locationData.features[0].properties.street}, ${locationData.features[0].properties.city || locationData.features[0].properties.county}`)
+                // setAddress2(`${locationData.features[0].properties.formatted}`)
+                setCity(`${locationData.features[0].properties.city || locationData.features[0].properties.county}`)
+                setState(`${locationData.features[0].properties.state}`)
+                setCountry(`${locationData.features[0].properties.country}`)
+            }).catch(error => {
+                console.log(error);
+            });
+        }, [longitude, latitude])
+
+        
 
         // GET IP address
         axios.get('https://api.ipify.org/?format=json')
@@ -122,29 +128,10 @@ function SimpleDialog(props) {
 
 
 
-    }else{
-        alert('You need to give location access')
-    }
-      
-  }, [coordinates, latitude, longitude])
-  
-
-    // useEffect(() => {
-        
-
-    //     return () => {
-    //         console.log("cleanup")
-    //     }
-    // }, [longitude, latitude])
+   
 
 
-    // useEffect(() => {
-       
-
-    //     return () => {
-    //         console.log("cleanup")
-    //     }
-    // }, [longitude, latitude])
+    
 
 
 
