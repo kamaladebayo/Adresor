@@ -74,21 +74,22 @@ function SimpleDialog(props) {
 
 
         useEffect(() => {
+            mapboxgl.accessToken = 'pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA';
+            const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/streets-v11', // style URL
+            center: [longitude, latitude], // starting position [lng, lat]
+            zoom: 11 // starting zoom
+            });
+
+
+
             axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA`)
             .then(response => {
                 setAddress2(response.data.features[0].place_name);
                 // setAddress2(`${locationData.features[0].properties.formatted}`)
             }).catch(error => {
                 console.log(error);
-            });
-
-
-            mapboxgl.accessToken = 'pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA';
-            const map = new mapboxgl.Map({
-            container: 'map', // container ID
-            style: 'mapbox://styles/mapbox/streets-v11', // style URL
-            center: [longitude, latitude], // starting position [lng, lat]
-            zoom: 9 // starting zoom
             });
 
             console.log(map);
