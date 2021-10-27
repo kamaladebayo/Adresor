@@ -11,7 +11,9 @@ import { useEffect, useState } from 'react';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import axios from 'axios'
-import mapboxgl from 'mapbox-gl'
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker'
 // import ReactMapGL from 'react-map-gl';
 import { Card } from '@mui/material';
 
@@ -89,13 +91,21 @@ useEffect(() => {
 // })
         useEffect(() => {
             mapboxgl.accessToken = 'pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA';
-            const map = new mapboxgl.Map({
-            container: 'map', // container ID
-            style: 'mapbox://styles/mapbox/streets-v11', // style URL
-            center: [longitude, latitude], // starting position [lng, lat]
-            zoom: 13 // starting zoom
-            });
+            // const map = new mapboxgl.Map({
+            // container: 'map', // container ID
+            // style: 'mapbox://styles/mapbox/streets-v11', // style URL
+            // center: [longitude, latitude], // starting position [lng, lat]
+            // zoom: 13 // starting zoom
+            // });
 
+
+            mapboxgl.workerClass = MapboxWorker; // Wire up loaded worker to be used instead of the default
+const map = new mapboxgl.Map({
+    container: 'map', // container ID
+    style: 'mapbox://styles/mapbox/streets-v11', // style URL
+    center: [longitude, latitude], // starting position [lng, lat]
+    zoom: 13 // starting zoom
+});
            
 
 
