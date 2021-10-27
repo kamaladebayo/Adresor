@@ -12,6 +12,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import axios from 'axios'
 import mapboxgl from 'mapbox-gl'
+// import ReactMapGL from 'react-map-gl';
 import { Card } from '@mui/material';
 
 const HomePage = () => {
@@ -60,33 +61,49 @@ function SimpleDialog(props) {
   const [IP, setIP] = useState('')
 
  
-
-// Get coordinates from Geolocation API
+useEffect(() => {
+    // Get coordinates from Geolocation API
   const successCallback = (position) => {
       setLatitude(`${position.coords.latitude}`)
+      console.log(position.coords.latitude);
+      console.log(position.coords.longitude);
       setLongitude(`${position.coords.longitude}`)
       setCoordinates(`${position.coords.latitude},${position.coords.longitude}`)
   }
   const errorCallback = (error) => {
       console.error(error)
   }
-  navigator.geolocation.getCurrentPosition(successCallback, errorCallback)
+  navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
+      enableHighAccuracy: true
+  })
+    
+}, [])
 
+//   let [viewport, setViewport] = useState({
+//     latitude: latitude,
+//     longitude: longitude,
+//     zoom: 8,
+//     width: '100%',
+//     height: '100%'
 
+// })
         useEffect(() => {
             mapboxgl.accessToken = 'pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA';
             const map = new mapboxgl.Map({
             container: 'map', // container ID
             style: 'mapbox://styles/mapbox/streets-v11', // style URL
             center: [longitude, latitude], // starting position [lng, lat]
-            zoom: 11 // starting zoom
+            zoom: 13 // starting zoom
             });
+
+           
 
 
 
             axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA`)
             .then(response => {
                 setAddress2(response.data.features[0].place_name);
+                console.log("Mapbox street used");
                 // setAddress2(`${locationData.features[0].properties.formatted}`)
             }).catch(error => {
                 console.log(error);
@@ -103,8 +120,9 @@ function SimpleDialog(props) {
         useEffect(() => {
             axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=400e716d00d04d4987c5fda5b9a34ce3`)
             .then(response => {
+                console.log("Geoapify used");
                 let locationData = response.data;
-                console.log(locationData.features[0].properties);
+                // console.log(locationData.features[0].properties);
                 setPostalCode(locationData.features[0].properties.postcode)
                 setAddress(`${locationData.features[0].properties.street}, ${locationData.features[0].properties.city || locationData.features[0].properties.county}`)
                 // setAddress2(`${locationData.features[0].properties.formatted}`)
@@ -122,6 +140,7 @@ function SimpleDialog(props) {
         axios.get('https://api.ipify.org/?format=json')
         .then(response => {
           setIP(response.data.ip)
+          console.log("Ipify used");
         }).catch(error => {
             console.log(error);
         });
@@ -147,7 +166,15 @@ function SimpleDialog(props) {
             <main>
                 <div className="home__map">
                     {/* Avatar */}
-                    <div id="map"></div>
+                    <div id="map">
+                    {/* <ReactMapGL
+                    mapboxApiAccessToken={
+                        "pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA"
+                    }
+                        {...viewport}
+                        onViewportChange={newView => setViewport(newView)}
+                    ></ReactMapGL> */}
+                    </div>
                     <div className="map__location">
                         <h1>Here's your location:</h1>
                         <p>{address2}</p>
