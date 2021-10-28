@@ -81,31 +81,19 @@ useEffect(() => {
     
 }, [])
 
-//   let [viewport, setViewport] = useState({
-//     latitude: latitude,
-//     longitude: longitude,
-//     zoom: 8,
-//     width: '100%',
-//     height: '100%'
 
-// })
         useEffect(() => {
             mapboxgl.accessToken = 'pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA';
-            // const map = new mapboxgl.Map({
-            // container: 'map', // container ID
-            // style: 'mapbox://styles/mapbox/streets-v11', // style URL
-            // center: [longitude, latitude], // starting position [lng, lat]
-            // zoom: 13 // starting zoom
-            // });
-
-
             mapboxgl.workerClass = MapboxWorker; // Wire up loaded worker to be used instead of the default
-const map = new mapboxgl.Map({
-    container: 'map', // container ID
-    style: 'mapbox://styles/mapbox/streets-v11', // style URL
-    center: [longitude, latitude], // starting position [lng, lat]
-    zoom: 13 // starting zoom
-});
+            const map = new mapboxgl.Map({
+                container: 'map', // container ID
+                style: 'mapbox://styles/mapbox/streets-v11', // style URL
+                center: [longitude, latitude], // starting position [lng, lat]
+                zoom: 13 // starting zoom
+            });
+            const marker = new mapboxgl.Marker({color: "#FF0000"})
+            .setLngLat([longitude, latitude])
+            .addTo(map)
            
 
 
