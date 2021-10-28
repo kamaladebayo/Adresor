@@ -95,6 +95,7 @@ useEffect(() => {
             .setLngLat([longitude, latitude])
             .addTo(map)
            
+            console.log(marker);
 
 
 
