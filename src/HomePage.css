@@ -35,6 +35,34 @@
     justify-content: center;
     gap: 1.5em;
     margin: 3em 0;
+    overflow-x: auto;
+    width: 100%;
+}
+.MuiCard-root{
+    width: 13em !important;
+    min-height: 11em !important;
+    padding: 1em !important;
+}
+.css-1t6e9jv-MuiCardActions-root{
+    padding: 1rem !important;
+}
+.css-1t6e9jv-MuiCardActions-root a{
+    text-decoration: none;
+    color: #1976d2;
+    text-transform: uppercase;
+}
+@media(max-width: 857px){
+    .nearbyPlaces{
+        width: 100%;
+    }
+    .nearbyPlaces > div{
+        display: flex;
+        justify-content: flex-start;
+        gap: 1.5em;
+        margin: 3em 0;
+        overflow-x: auto;
+        width: 100%;
+    }
 }
 div#map{
     width: 300px;
@@ -42,4 +70,10 @@ div#map{
     border-radius: 50%;
     /* position: static; */
     background: #DDD;
+}
+.venue div#map{
+    margin: 2em auto;
+}
+.venue{
+    text-align: center;
 }

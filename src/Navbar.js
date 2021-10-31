@@ -24,7 +24,6 @@ const Navbar = () => {
             <ul role="navigation" className="navLinks">
                 <li><a href="/about">About</a></li>
                 <li><a href="/archive">Archive</a></li>
-                <li><a href="/admin">Admin</a></li>
             </ul>
             <ion-icon name="menu-outline" className="sidenav-trigger" onClick={toggleDrawer('right', true)}></ion-icon>
 
@@ -37,7 +36,6 @@ const Navbar = () => {
                 <ul role="navigation" className="mobileLinks">
                     <li><a href="/about">About</a></li>
                     <li><a href="/archive">Archive</a></li>
-                    <li><a href="/admin">Admin</a></li>
                 </ul>
             </SwipeableDrawer>
         </nav>

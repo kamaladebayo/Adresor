@@ -2,8 +2,9 @@ import React from 'react';
 import './App.css';
 import About from './About';
 import HomePage from './HomePage';
-import Admin from './Admin';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Archive from './Archive';
+import Venue from './Venue';
 
 function App() {
   return (
@@ -24,8 +25,11 @@ function App() {
             <Route path="/about">
               <About />
             </Route>
-            <Route path="/admin">
-              <Admin />
+            <Route path="/archive">
+              <Archive />
+            </Route>
+            <Route path="/venue">
+              <Venue />
             </Route>
             {/* <Route path="/archive">
               <Archive
