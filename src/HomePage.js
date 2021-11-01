@@ -47,21 +47,23 @@ useEffect(() => {
 
   
     
-  if(!latitude && !longitude){
-      axios.get('https://api.geoapify.com/v1/ipinfo?&apiKey=400e716d00d04d4987c5fda5b9a34ce3')
-                .then(response => {
-                      setLatitude(response.data.location.latitude)
-                    setLongitude(response.data.location.latitude)
-                    console.log(response);
-                //   console.log("Ipify used");
-                }).catch(error => {
-                    console.log(error);
-                });
-  }else{
+//   if(!latitude && !longitude){
+//       axios.get('https://api.ipgeolocation.io/ipgeo?apiKey=b16f78f487a349d1b85e6b7e939e0e54')
+//                 .then(response => {
+//                      setLatitude(response.data.latitude)
+//                    setLongitude(response.data.latitude)
+//                     // console.log(response);
+//                     console.log(latitude);
+//                     console.log(longitude);
+//                 //   console.log("Ipify used");
+//                 }).catch(error => {
+//                     console.log(error);
+//                 });
+//   }else{
     const successCallback = (position) => {
         setLatitude(`${position.coords.latitude}`)
-      //   console.log(position.coords.latitude);
-      //   console.log(position.coords.longitude);
+        console.log(position.coords.latitude);
+        console.log(position.coords.longitude);
         setLongitude(`${position.coords.longitude}`)
         setCoordinates(`${position.coords.latitude},${position.coords.longitude}`)
     }
@@ -71,7 +73,7 @@ useEffect(() => {
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
         enableHighAccuracy: true
     })
-  }
+//   }
 }, [latitude, longitude])
 
 
