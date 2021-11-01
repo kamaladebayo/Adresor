@@ -31,6 +31,7 @@ const HomePage = () => {
   const [longitude, setLongitude] = useState('')
   const [address, setAddress] = useState('')
   const [address2, setAddress2] = useState('')
+  const [address3, setAddress3] = useState('')
   const [postalCode, setPostalCode] = useState('')
   const [city, setCity] = useState('')
   const [state, setState] = useState('')
@@ -38,23 +39,43 @@ const HomePage = () => {
   const [IP, setIP] = useState('')
 
  
+  
+
+
 useEffect(() => {
     // Get coordinates from Geolocation API
-  const successCallback = (position) => {
-      setLatitude(`${position.coords.latitude}`)
-    //   console.log(position.coords.latitude);
-    //   console.log(position.coords.longitude);
-      setLongitude(`${position.coords.longitude}`)
-      setCoordinates(`${position.coords.latitude},${position.coords.longitude}`)
-  }
-  const errorCallback = (error) => {
-      console.error(error)
-  }
-  navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
-      enableHighAccuracy: true
-  })
+
+  
     
-}, [])
+  if(!latitude && !longitude){
+      axios.get('https://api.geoapify.com/v1/ipinfo?&apiKey=400e716d00d04d4987c5fda5b9a34ce3')
+                .then(response => {
+                      setLatitude(response.data.location.latitude)
+                    setLongitude(response.data.location.latitude)
+                    console.log(response);
+                //   console.log("Ipify used");
+                }).catch(error => {
+                    console.log(error);
+                });
+  }else{
+    const successCallback = (position) => {
+        setLatitude(`${position.coords.latitude}`)
+      //   console.log(position.coords.latitude);
+      //   console.log(position.coords.longitude);
+        setLongitude(`${position.coords.longitude}`)
+        setCoordinates(`${position.coords.latitude},${position.coords.longitude}`)
+    }
+    const errorCallback = (error) => {
+        console.error(error)
+    }
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
+        enableHighAccuracy: true
+    })
+  }
+}, [latitude, longitude])
+
+
+    
 
 
         useEffect(() => {
@@ -75,7 +96,7 @@ useEffect(() => {
 
 
             axios.get(`https://api.foursquare.com/v2/venues/search?ll=${latitude},${longitude}&client_id=4Z0I5R3WQZDSLGM4LCDBFAYDS4FKAU2KL1YFO0IGCRM2ECDV&client_secret=52QHPTM44KL1DR1BNOJYOOXJLEE0SR4ZW3A1SEGUJQV1Q4VK&v=20182507`)
-            // axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA`)
+            
             .then(response => {
                 // setAddress2(response);
                 setAddress2(response.data.response.venues[2].location.formattedAddress[0]);
@@ -85,7 +106,13 @@ useEffect(() => {
             });
 
             //GET ADDRESS FROM FOURSQUARE
-
+            axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=pk.eyJ1Ijoia2FtYWxhZGViYXlvIiwiYSI6ImNrdjdyNWNpZTE4Yjkycm9rYXA3ZnF0MW0ifQ.99PINiiJawzCjrFkteO5kA`)
+            .then(response => {
+                // setAddress2(`${locationData.features[0].properties.formatted}`)
+                setAddress3(response.data.features[0].place_name);
+            }).catch(error => {
+                console.log(error);
+            });
             console.log(map);
         }, [longitude, latitude])
         // ===========================================
@@ -122,6 +149,7 @@ useEffect(() => {
             console.log(error);
         });
       
+        
         
         const [nearbyPlaces, setNearbyPlaces] = useState([])
 
@@ -293,7 +321,7 @@ useEffect(() => {
                     <div id="map"></div>
                     <div className="map__location">
                         <h1>Here's your location:</h1>
-                        <p>{address2}</p>
+                        <p>{address2}. {address3}</p>
                         <br />
                         <h2>Address details</h2>
                         <p>Address: {address}</p>
