@@ -42,8 +42,8 @@ useEffect(() => {
     // Get coordinates from Geolocation API
   const successCallback = (position) => {
       setLatitude(`${position.coords.latitude}`)
-      console.log(position.coords.latitude);
-      console.log(position.coords.longitude);
+    //   console.log(position.coords.latitude);
+    //   console.log(position.coords.longitude);
       setLongitude(`${position.coords.longitude}`)
       setCoordinates(`${position.coords.latitude},${position.coords.longitude}`)
   }
@@ -99,7 +99,7 @@ useEffect(() => {
             .then(response => {
                 console.log("Geoapify used");
                 let locationData = response.data;
-                console.log(locationData.features[0].properties);
+                // console.log(locationData.features[0].properties);
                 setPostalCode(locationData.features[0].properties.postcode)
                 setAddress(`${locationData.features[0].properties.address_line2}` || `${locationData.features[0].properties.address_line1}` || `${locationData.features[0].properties.formatted}`)
                 // setAddress2(`${locationData.features[0].properties.formatted}`)
@@ -129,7 +129,7 @@ useEffect(() => {
         useEffect(() => {
             axios.get(`https://api.foursquare.com/v2/venues/explore?ll=${latitude},${longitude}&client_id=4Z0I5R3WQZDSLGM4LCDBFAYDS4FKAU2KL1YFO0IGCRM2ECDV&client_secret=52QHPTM44KL1DR1BNOJYOOXJLEE0SR4ZW3A1SEGUJQV1Q4VK&v=20182507`)
             .then(response => {
-                console.log(response.data.response.groups[0].items);
+                // console.log(response.data.response.groups[0].items);
                 setNearbyPlaces(response.data.response.groups[0].items)
             })
             .catch(err => {
@@ -189,7 +189,7 @@ useEffect(() => {
         // const [location, setLocation] = useState();
         const d = new Date();
         let todDate = d.toLocaleDateString();
-        console.log(todDate);
+        // console.log(todDate);
         useEffect(() => {
             if(address2 && country){
                 db.collection('location').add({
@@ -267,7 +267,7 @@ useEffect(() => {
   
 
 useEffect(() => {
-    console.log(venueParam);
+    // console.log(venueParam);
     sessionStorage.setItem("venue", [venueParam]);
 }, [venueParam])
 
@@ -295,6 +295,7 @@ useEffect(() => {
                         <h1>Here's your location:</h1>
                         <p>{address2}</p>
                         <br />
+                        <h2>Address details</h2>
                         <p>Address: {address}</p>
                         <p>City: {city}</p>
                         <p>State: {state}</p>
@@ -306,7 +307,7 @@ useEffect(() => {
                 </div>
                 <br />
                 <div className="nearbyPlaces">
-                    <h2>Places nearby</h2>
+                    <h2>Some places around you</h2>
                     <div>
                         {/* First card */}
                         {nearbyPlaces && nearbyPlaces.slice(1, 2).map((place) => (
