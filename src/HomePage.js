@@ -101,7 +101,7 @@ useEffect(() => {
             
             .then(response => {
                 // setAddress2(response);
-                setAddress2(response.data.response.venues[2].location.formattedAddress[0]);
+                setAddress(response.data.response.venues[2].location.formattedAddress[0]);
                 // setAddress2(`${locationData.features[0].properties.formatted}`)
             }).catch(error => {
                 console.log(error);
@@ -130,7 +130,7 @@ useEffect(() => {
                 let locationData = response.data;
                 // console.log(locationData.features[0].properties);
                 setPostalCode(locationData.features[0].properties.postcode)
-                setAddress(`${locationData.features[0].properties.address_line2}` || `${locationData.features[0].properties.address_line1}` || `${locationData.features[0].properties.formatted}`)
+                setAddress2(`${locationData.features[0].properties.address_line2}` || `${locationData.features[0].properties.address_line1}` || `${locationData.features[0].properties.formatted}`)
                 // setAddress2(`${locationData.features[0].properties.formatted}`)
                 setCity(`${locationData.features[0].properties.city || locationData.features[0].properties.county}`)
                 setState(`${locationData.features[0].properties.state}`)
@@ -326,7 +326,7 @@ useEffect(() => {
                         <p>{address2}. {address3}</p>
                         <br />
                         <h2>Address details</h2>
-                        <p>Address: {address}</p>
+                        <p>Place: {address}</p>
                         <p>City: {city}</p>
                         <p>State: {state}</p>
                         <p>Country: {country}</p>
