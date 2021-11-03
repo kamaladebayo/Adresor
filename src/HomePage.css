@@ -77,3 +77,9 @@ div#map{
 .venue{
     text-align: center;
 }
+
+.address-flex{
+    display: flex;
+    align-items: center;
+    gap: .5em;
+}

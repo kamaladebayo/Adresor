@@ -322,17 +322,21 @@ useEffect(() => {
                 <div className="home__map">
                     <div id="map"></div>
                     <div className="map__location">
-                        <h1>Here's your location:</h1>
-                        <p>{address2}. {address3}</p>
+                        <h1>Your current address is:</h1>
+                        <p>{address3}. <br /> <br />{address}</p>
                         <br />
                         <h2>Address details</h2>
-                        <p>Place: {address}</p>
                         <p>City: {city}</p>
                         <p>State: {state}</p>
                         <p>Country: {country}</p>
                         <p>Postal code: {postalCode}</p>
                         <p>IP address code: {IP}</p>
                         <p>Coordinates: {coordinates}</p>
+                    <br />
+                    <div className="address-flex">
+                        <h3>The closest place:</h3> 
+                        <p>{address2}</p>
+                    </div>
                     </div>
                 </div>
                 <br />
